@@ -7,9 +7,6 @@ services:
       CLICKHOUSE_USER: ${OPENLIT_DB_USER:-default}
     volumes:
       - clickhouse-data:/var/lib/clickhouse
-    ports:
-      - "9000:9000"
-      - "8123:8123"
     restart: always
 
   openlit:
@@ -25,8 +22,6 @@ services:
       SQLITE_DATABASE_URL: file:/app/client/data/data.db
       PORT: ${PORT:-3000}
       DOCKER_PORT: ${PORT:-3000}
-    ports:
-      - "${PORT:-3000}:${DOCKER_PORT:-3000}"
     depends_on:
       - clickhouse
     volumes:
@@ -42,11 +37,6 @@ services:
       INIT_DB_DATABASE: ${OPENLIT_DB_NAME:-openlit}
       INIT_DB_USERNAME: ${OPENLIT_DB_USER:-default}
       INIT_DB_PASSWORD: ${OPENLIT_DB_PASSWORD:-OPENLIT}
-    ports:
-      - "4317:4317"
-      - "4318:4318"
-      - "8888:8888"
-      - "55679:55679"
     depends_on:
       - clickhouse
     volumes:
